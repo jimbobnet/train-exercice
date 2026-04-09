@@ -20,9 +20,9 @@ src/
 ├── Driver.java           ← complete, do not modify
 ├── Train.java            ← complete, do not modify
 ├── Service.java          ← complete, do not modify
-├── ExpressService.java   ← Task 7 Part A is here
-├── Timetable.java        ← Tasks 1–4 and Task 7 Part B are here
-├── TransitUtils.java     ← Tasks 5–6 are here
+├── ExpressService.java   ← Task 6 Part A is here
+├── Timetable.java        ← Tasks 1–4 and Task 6 Part B are here
+├── TransitUtils.java     ← Tasks 5 and extension are here
 └── Main.java             ← test harness, do not modify
 ```
 
