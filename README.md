@@ -9,7 +9,7 @@ Estimated time: ~1 hour
 
 MetroLine is a commuter rail operator. Their system manages a fleet of **Trains**, a pool of licensed **Drivers**, and a daily **Timetable** of scheduled **Services**.
 
-You are given four fully implemented classes — `Driver`, `Train`, `Service`, and a partial `Timetable` — plus a utility class `TransitUtils`. Your job is to complete six methods spread across those last two files.
+You are given four fully implemented classes — `Driver`, `Train`, `Service`, and a skeleton `ExpressService` — plus a partial `Timetable` and a utility class `TransitUtils`. Your job is to complete seven methods and one subclass across those last three files.
 
 ---
 
@@ -17,12 +17,13 @@ You are given four fully implemented classes — `Driver`, `Train`, `Service`, a
 
 ```
 src/
-├── Driver.java         ← complete, do not modify
-├── Train.java          ← complete, do not modify
-├── Service.java        ← complete, do not modify
-├── Timetable.java      ← Tasks 1–4 are here
-├── TransitUtils.java   ← Tasks 5–6 are here
-└── Main.java           ← test harness, do not modify
+├── Driver.java           ← complete, do not modify
+├── Train.java            ← complete, do not modify
+├── Service.java          ← complete, do not modify
+├── ExpressService.java   ← Task 7 Part A is here
+├── Timetable.java        ← Tasks 1–4 and Task 7 Part B are here
+├── TransitUtils.java     ← Tasks 5–6 are here
+└── Main.java             ← test harness, do not modify
 ```
 
 ---
@@ -109,7 +110,50 @@ Both input queues must be **empty** when the method returns.
 
 ---
 
-### Task 6 (Extension) — `TransitUtils.retrieveTrain()`
+### Task 6 — `ExpressService` (inheritance)
+
+This task introduces **inheritance** — a concept not covered in the exam paper.
+
+#### Part A — Write the `ExpressService` class (`ExpressService.java`)
+
+`ExpressService` is a subclass of `Service` that adds one extra attribute: the platform number the train departs from.
+
+Complete the three TODOs in `ExpressService.java`:
+
+1. **Declare the private field** `int platformNumber`.
+
+2. **Write the constructor.** It takes the same parameters as `Service` plus `int platformNumber`.  
+   Use `super(train, driver, departureTime, routeCode)` as the very first statement to call the parent constructor, then assign `platformNumber`.
+
+3. **Write the getter** `getPlatformNumber()`.
+
+4. **Override `toString()`** to return a String in the format:  
+   `"[EXPRESS T034 08:00 R2 platform=3]"`
+
+Because `ExpressService` extends `Service`, an `ExpressService` object can be passed to `Timetable.add()` and stored in the schedule array without any changes to `Timetable` — this is **subtype polymorphism** in action.
+
+#### Part B — Implement `Timetable.showExpressServices()`
+
+Iterate through the schedule and print one summary line for every `ExpressService` entry, skipping regular `Service` objects.
+
+Use the `instanceof` keyword to identify express services, then **downcast** to access `getPlatformNumber()`:
+
+```java
+if (schedule[i] instanceof ExpressService) {
+    ExpressService es = (ExpressService) schedule[i];
+    // ... print es.getDepartureTime(), es.getRouteCode(), es.getPlatformNumber()
+}
+```
+
+Expected output format:
+```
+08:00 R2 [Platform 3]
+09:30 R1 [Platform 7]
+```
+
+---
+
+### Extension — `TransitUtils.retrieveTrain()`
 
 The MetroLine depot yard is modelled as a `Stack<Train>` — a single-track road where you can only access the top train directly.
 
@@ -130,6 +174,7 @@ If `trainId` is not found, leave the stack unchanged.
 | `Driver` | `licenceId`, `name`, `available` | — |
 | `Train` | `trainId`, `capacity`, `inService` | — |
 | `Service` | `train`, `driver`, `departureTime`, `routeCode`, `completed` | has-a `Train`, has-a `Driver` |
+| `ExpressService` | inherits all of `Service` + `platformNumber` | is-a `Service` |
 | `Timetable` | `schedule[]` (sorted array), `last` | contains `Service` objects |
 
 The `compareWith()` method on `Service` compares departure times:  

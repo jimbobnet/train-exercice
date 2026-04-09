@@ -14,10 +14,11 @@
  * ─────────────────────────────────────────────────────────────────────────
  * YOUR TASKS
  * ─────────────────────────────────────────────────────────────────────────
- *   Task 1 – search()          linear search; returns index or -1
- *   Task 2 – add()             sorted insertion; keeps array in time order
- *   Task 3 – showIncomplete()  print departure times of unfinished services
- *   Task 4 – reassignDriver()  swap drivers on all incomplete services
+ *   Task 1 – search()              linear search; returns index or -1
+ *   Task 2 – add()                 sorted insertion; keeps array in time order
+ *   Task 3 – showIncomplete()      print departure times of unfinished services
+ *   Task 4 – reassignDriver()      swap drivers on all incomplete services
+ *   Task 6B – showExpressServices() print details of all ExpressService entries
  * ─────────────────────────────────────────────────────────────────────────
  */
 public class Timetable {
@@ -164,5 +165,31 @@ public class Timetable {
         // After the loop, if `original != null`:
         //   - original.setAvailable(true)
         //   - replacement.setAvailable(false)
+    }
+
+    // ── Task 6 ────────────────────────────────────────────────────────────
+
+    /**
+     * Prints a summary of every ExpressService in the timetable, in
+     * departure-time order.
+     *
+     * Regular Service entries must be silently skipped.
+     *
+     * Example output line:
+     *   08:00 R2 [Platform 3]
+     */
+    public void showExpressServices() {
+        // TODO – Task 6 Part B
+        //
+        // Iterate through schedule[0..last].
+        //
+        // For each entry, check whether it is an ExpressService using:
+        //   schedule[i] instanceof ExpressService
+        //
+        // If true, downcast it so you can call getPlatformNumber():
+        //   ExpressService es = (ExpressService) schedule[i];
+        //
+        // Then print one line per express service in the format:
+        //   es.getDepartureTime() + " " + es.getRouteCode() + " [Platform " + es.getPlatformNumber() + "]"
     }
 }

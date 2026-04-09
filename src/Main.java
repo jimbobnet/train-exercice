@@ -62,6 +62,7 @@ public class Main {
         testTask4();
         testTask5();
         testTask6();
+        testTask7();
 
         System.out.println("\n══════════════════════════════════════════");
         System.out.printf("  Results: %d passed, %d failed%n", passed, failed);
@@ -231,10 +232,49 @@ public class Main {
         check("mergeDepartures() empties southQueue", south.isEmpty());
     }
 
-    // ── Task 6 (Extension): retrieveTrain() ──────────────────────────────
+    // ── Task 6: ExpressService and showExpressServices() ─────────────────
+
+    static void testTask7() {
+        section("Task 6 — ExpressService and showExpressServices()");
+
+        buildFixtures();
+        Timetable tt = new Timetable();
+
+        // Mix of regular and express services
+        Service      reg1 = new Service(t1, d1, "07:15", "R1");
+        ExpressService ex1 = new ExpressService(t2, d2, "08:00", "R2", 3);
+        Service      reg2 = new Service(t3, d3, "08:45", "R3");
+        ExpressService ex2 = new ExpressService(t4, d1, "09:30", "R1", 7);
+
+        tt.add(reg1); tt.add(ex1); tt.add(reg2); tt.add(ex2);
+
+        // ── Part A: ExpressService class ──────────────────────────────────
+        check("ExpressService IS-A Service (instanceof)",
+                ex1 instanceof Service);
+        check("getPlatformNumber() returns 3 for ex1",
+                ex1.getPlatformNumber() == 3);
+        check("getPlatformNumber() returns 7 for ex2",
+                ex2.getPlatformNumber() == 7);
+        check("inherited getDepartureTime() works on ExpressService",
+                ex1.getDepartureTime().equals("08:00"));
+        check("inherited getRouteCode() works on ExpressService",
+                ex2.getRouteCode().equals("R1"));
+        check("add() accepts ExpressService in timetable (4 services total)",
+                tt.getSize() == 4);
+
+        // ── Part B: showExpressServices() ────────────────────────────────
+        System.out.println("  showExpressServices() — expected (express only, in time order):");
+        System.out.println("    08:00 R2 [Platform 3]");
+        System.out.println("    09:30 R1 [Platform 7]");
+        System.out.println("  Actual output:");
+        tt.showExpressServices();
+        System.out.println("  (regular services 07:15 R1 and 08:45 R3 must NOT appear above)");
+    }
+
+    // ── Extension: retrieveTrain() ───────────────────────────────────────
 
     static void testTask6() {
-        section("Task 6 (Extension) — retrieveTrain()");
+        section("Extension — retrieveTrain()");
 
         buildFixtures();
         Stack<Train> yard = new Stack<>();
